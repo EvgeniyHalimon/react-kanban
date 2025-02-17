@@ -34,6 +34,7 @@ export const BurnBarrel = ({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       role="button"
+      data-testid="burn-barrel"
       tabIndex={0}
       className={`mt-10 grid h-56 w-56 shrink-0 place-content-center rounded border text-3xl ${
         active
