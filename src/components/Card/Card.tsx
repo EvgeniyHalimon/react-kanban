@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { DropIndicator } from './DropIndicator';
-import { CardType } from './types';
+import { DropIndicator } from '../DropIndicator/DropIndicator';
+import { CardType } from '../../types';
 
 type CardProps = CardType & {
   handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FaFire } from 'react-icons/fa';
 import { FiTrash } from 'react-icons/fi';
-import { CardType } from './types';
+import { CardType } from '../../types';
 
 export const BurnBarrel = ({
   setCards,

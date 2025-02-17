@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { Card } from './Card';
-import { DropIndicator } from './DropIndicator';
-import { CardType, ColumnType } from './types';
-import { AddCard } from './AddCard';
+import { CardType, ColumnType } from '../../types';
+import { AddCard, Card, DropIndicator } from '..';
 
 type ColumnProps = {
   title: string;

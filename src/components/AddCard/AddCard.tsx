@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction, useState, FormEvent } from 'react';
 import { FiPlus } from 'react-icons/fi';
-import { ColumnType, CardType } from './types';
+import { ColumnType, CardType } from '../../types';
 
 type AddCardProps = {
   column: ColumnType;
