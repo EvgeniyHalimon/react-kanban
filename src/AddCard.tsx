@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState, FormEvent } from "react";
-import { FiPlus } from "react-icons/fi";
-import { ColumnType, CardType } from "./types";
+import { motion } from 'framer-motion';
+import { Dispatch, SetStateAction, useState, FormEvent } from 'react';
+import { FiPlus } from 'react-icons/fi';
+import { ColumnType, CardType } from './types';
 
 type AddCardProps = {
   column: ColumnType;
@@ -9,7 +9,7 @@ type AddCardProps = {
 };
 
 export const AddCard = ({ column, setCards }: AddCardProps) => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [adding, setAdding] = useState(false);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -23,7 +23,7 @@ export const AddCard = ({ column, setCards }: AddCardProps) => {
       id: Math.random().toString(),
     };
 
-    setCards((pv) => [...pv, newCard]);
+    setCards(pv => [...pv, newCard]);
 
     setAdding(false);
   };
@@ -33,7 +33,7 @@ export const AddCard = ({ column, setCards }: AddCardProps) => {
       {adding ? (
         <motion.form layout onSubmit={handleSubmit}>
           <textarea
-            onChange={(e) => setText(e.target.value)}
+            onChange={e => setText(e.target.value)}
             autoFocus
             placeholder="Add new task..."
             className="w-full rounded border border-violet-400 bg-violet-400/20 p-3 text-sm text-neutral-50 placeholder-violet-300 focus:outline-0"

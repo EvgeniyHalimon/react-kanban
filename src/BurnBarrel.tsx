@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { FaFire } from "react-icons/fa";
-import { FiTrash } from "react-icons/fi";
-import { CardType } from "./types";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { FaFire } from 'react-icons/fa';
+import { FiTrash } from 'react-icons/fi';
+import { CardType } from './types';
 
 export const BurnBarrel = ({
   setCards,
@@ -21,9 +21,9 @@ export const BurnBarrel = ({
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const cardId = e.dataTransfer.getData("cardId");
+    const cardId = e.dataTransfer.getData('cardId');
 
-    setCards((pv) => pv.filter((c) => c.id !== cardId));
+    setCards(pv => pv.filter(c => c.id !== cardId));
 
     setActive(false);
   };
@@ -37,8 +37,8 @@ export const BurnBarrel = ({
       tabIndex={0}
       className={`mt-10 grid h-56 w-56 shrink-0 place-content-center rounded border text-3xl ${
         active
-          ? "border-red-800 bg-red-800/20 text-red-500"
-          : "border-neutral-500 bg-neutral-500/20 text-neutral-500"
+          ? 'border-red-800 bg-red-800/20 text-red-500'
+          : 'border-neutral-500 bg-neutral-500/20 text-neutral-500'
       }`}
     >
       {active ? <FaFire className="animate-bounce" /> : <FiTrash />}

@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { Card } from "./Card";
-import { DropIndicator } from "./DropIndicator";
-import { CardType, ColumnType } from "./types";
-import { AddCard } from "./AddCard";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Card } from './Card';
+import { DropIndicator } from './DropIndicator';
+import { CardType, ColumnType } from './types';
+import { AddCard } from './AddCard';
 
 type ColumnProps = {
   title: string;
@@ -21,12 +21,15 @@ export const Column = ({
 }: ColumnProps) => {
   const [active, setActive] = useState(false);
 
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, card: CardType) => {
-    e.dataTransfer.setData("cardId", card.id);
+  const handleDragStart = (
+    e: React.DragEvent<HTMLDivElement>,
+    card: CardType
+  ) => {
+    e.dataTransfer.setData('cardId', card.id);
   };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    const cardId = e.dataTransfer.getData("cardId");
+    const cardId = e.dataTransfer.getData('cardId');
 
     setActive(false);
     clearHighlights();
@@ -34,23 +37,23 @@ export const Column = ({
     const indicators = getIndicators();
     const { element } = getNearestIndicator(e, indicators);
 
-    const before = element.dataset.before || "-1";
+    const before = element.dataset.before || '-1';
 
     if (before !== cardId) {
       let copy = [...cards];
 
-      let cardToTransfer = copy.find((c) => c.id === cardId);
+      let cardToTransfer = copy.find(c => c.id === cardId);
       if (!cardToTransfer) return;
       cardToTransfer = { ...cardToTransfer, column };
 
-      copy = copy.filter((c) => c.id !== cardId);
+      copy = copy.filter(c => c.id !== cardId);
 
-      const moveToBack = before === "-1";
+      const moveToBack = before === '-1';
 
       if (moveToBack) {
         copy.push(cardToTransfer);
       } else {
-        const insertAtIndex = copy.findIndex((el) => el.id === before);
+        const insertAtIndex = copy.findIndex(el => el.id === before);
         if (insertAtIndex === -1) return;
 
         copy.splice(insertAtIndex, 0, cardToTransfer);
@@ -68,7 +71,7 @@ export const Column = ({
 
   const clearHighlights = (els?: HTMLElement[]) => {
     const indicators = els || getIndicators();
-    indicators.forEach((i) => (i.style.opacity = "0"));
+    indicators.forEach(i => (i.style.opacity = '0'));
   };
 
   const highlightIndicator = (e: React.DragEvent<HTMLDivElement>) => {
@@ -76,10 +79,13 @@ export const Column = ({
     clearHighlights(indicators);
 
     const el = getNearestIndicator(e, indicators);
-    el.element.style.opacity = "1";
+    el.element.style.opacity = '1';
   };
 
-  const getNearestIndicator = (e: React.DragEvent<HTMLDivElement>, indicators: HTMLElement[]) => {
+  const getNearestIndicator = (
+    e: React.DragEvent<HTMLDivElement>,
+    indicators: HTMLElement[]
+  ) => {
     const DISTANCE_OFFSET = 50;
 
     return indicators.reduce(
@@ -109,7 +115,7 @@ export const Column = ({
     setActive(false);
   };
 
-  const filteredCards = cards.filter((c) => c.column === column);
+  const filteredCards = cards.filter(c => c.column === column);
 
   return (
     <div className="w-56 shrink-0">
@@ -124,10 +130,10 @@ export const Column = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         className={`h-full w-full transition-colors ${
-          active ? "bg-neutral-800/50" : "bg-neutral-800/0"
+          active ? 'bg-neutral-800/50' : 'bg-neutral-800/0'
         }`}
       >
-        {filteredCards.map((c) => (
+        {filteredCards.map(c => (
           <Card key={c.id} {...c} handleDragStart={handleDragStart} />
         ))}
         <DropIndicator beforeId={null} column={column} />
