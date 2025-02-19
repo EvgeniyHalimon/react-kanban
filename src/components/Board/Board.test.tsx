@@ -19,18 +19,30 @@ describe('Board Component', () => {
 
   test('should allow cards to be removed by BurnBarrel', () => {
     const setCardsMock = vi.fn();
+    const preventDefault = vi.fn();
+
     render(<BurnBarrel setCards={setCardsMock} />);
     const burnBarrel = screen.getByRole('button');
 
-    const mockEvent = {
-      preventDefault: vi.fn(),
-      dataTransfer: {
+    const dropEvent = new Event('drop', { bubbles: true });
+    Object.defineProperty(dropEvent, 'preventDefault', {
+      value: preventDefault,
+    });
+    Object.defineProperty(dropEvent, 'dataTransfer', {
+      value: {
         getData: vi.fn().mockReturnValue('card-1'),
       },
-    } as unknown as React.DragEvent<HTMLDivElement>;
+    });
 
-    fireEvent.drop(burnBarrel, mockEvent);
+    const dragOverEvent = new Event('dragover', { bubbles: true });
+    Object.defineProperty(dragOverEvent, 'preventDefault', {
+      value: preventDefault,
+    });
 
+    fireEvent(burnBarrel, dragOverEvent);
+    fireEvent(burnBarrel, dropEvent);
+
+    expect(preventDefault).toHaveBeenCalledTimes(2);
     expect(setCardsMock).toHaveBeenCalledTimes(1);
 
     const updateFunction = setCardsMock.mock.calls[0][0];
