@@ -60,5 +60,6 @@ describe('Column Component', () => {
   it('renders the add card button', () => {
     render(<Column {...columnProps} />);
     expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByText(/Add card/i)).toBeInTheDocument();
   });
 });

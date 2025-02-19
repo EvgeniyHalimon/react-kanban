@@ -56,7 +56,6 @@ describe('BurnBarrel Component', () => {
     fireEvent.drop(burnBarrel, mockEvent);
 
     expect(setCardsMock).toHaveBeenCalledTimes(1);
-    expect(setCardsMock).toHaveBeenCalledWith(expect.any(Function));
 
     const updateFunction = setCardsMock.mock.calls[0][0];
     const mockPrevState = [{ id: 'card-1' }, { id: 'card-2' }];

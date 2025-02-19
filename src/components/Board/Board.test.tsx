@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { Board } from './Board';
-import { describe, test, expect } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, test, expect, vi } from 'vitest';
+import { BurnBarrel, Board } from '..';
 
 describe('Board Component', () => {
   test('renders Board component with columns and cards', () => {
@@ -18,10 +18,23 @@ describe('Board Component', () => {
   });
 
   test('should allow cards to be removed by BurnBarrel', () => {
-    render(<Board />);
+    const setCardsMock = vi.fn();
+    render(<BurnBarrel setCards={setCardsMock} />);
+    const burnBarrel = screen.getByRole('button');
 
-    const burnBarrelButton = screen.getByTestId('burn-barrel');
+    const mockEvent = {
+      preventDefault: vi.fn(),
+      dataTransfer: {
+        getData: vi.fn().mockReturnValue('card-1'),
+      },
+    } as unknown as React.DragEvent<HTMLDivElement>;
 
-    expect(burnBarrelButton).toBeInTheDocument();
+    fireEvent.drop(burnBarrel, mockEvent);
+
+    expect(setCardsMock).toHaveBeenCalledTimes(1);
+
+    const updateFunction = setCardsMock.mock.calls[0][0];
+    const mockPrevState = [{ id: 'card-1' }, { id: 'card-2' }];
+    expect(updateFunction(mockPrevState)).toEqual([{ id: 'card-2' }]);
   });
 });

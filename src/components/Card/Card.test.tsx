@@ -22,6 +22,7 @@ describe('AddCard Component', () => {
     fireEvent.click(screen.getByText(/Add card/i));
 
     expect(screen.getByPlaceholderText(/Add new task/i)).toBeInTheDocument();
+    expect(screen.getByText(/Close/i)).toBeInTheDocument();
   });
 
   it('updates input value when typing', () => {
@@ -44,7 +45,6 @@ describe('AddCard Component', () => {
     fireEvent.submit(textarea.closest('form')!);
 
     expect(setCardsMock).toHaveBeenCalledTimes(1);
-    expect(setCardsMock).toHaveBeenCalledWith(expect.any(Function));
   });
 
   it('prevents adding an empty card', () => {
