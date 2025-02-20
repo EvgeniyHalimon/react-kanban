@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, afterEach, beforeEach, Mock } from 'vitest';
+import { Mock } from 'vitest';
 import { AddCard } from '..';
 
 describe('AddCard Component', () => {

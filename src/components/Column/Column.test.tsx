@@ -1,5 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Column } from './Column';
 import { CardType, ColumnType } from '../../types';
 

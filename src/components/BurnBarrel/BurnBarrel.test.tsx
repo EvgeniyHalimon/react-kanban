@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BurnBarrel } from './BurnBarrel';
-import { describe, it, expect, vi, afterEach, beforeEach, Mock } from 'vitest';
 import React from 'react';
+import { Mock } from 'vitest';
 
 describe('BurnBarrel Component', () => {
   let setCardsMock: Mock;
