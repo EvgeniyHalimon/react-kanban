@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { AddCard } from './AddCard';
+import React from 'react';
 
 describe('AddCard Component', () => {
   const setCardsMock = vi.fn();
@@ -28,27 +29,64 @@ describe('AddCard Component', () => {
   });
 
   it('calls setCards with new card when submitting', () => {
+    const setCardsMock = vi.fn();
+    const preventDefault = vi.fn();
+    const setAdding = vi.fn();
+
+    vi.spyOn(React, 'useState').mockImplementation(() => [true, setAdding]);
+
     render(<AddCard column="todo" setCards={setCardsMock} />);
     fireEvent.click(screen.getByText(/Add card/i));
 
     const textarea = screen.getByPlaceholderText(/Add new task/i);
     fireEvent.change(textarea, { target: { value: 'New task' } });
 
-    fireEvent.submit(textarea.closest('form')!);
+    const form = textarea.closest('form')!;
+    const submitEvent = new Event('submit', { bubbles: true });
+    Object.defineProperty(submitEvent, 'preventDefault', {
+      value: preventDefault,
+    });
+
+    fireEvent(form, submitEvent);
+
+    expect(preventDefault).toHaveBeenCalled();
 
     expect(setCardsMock).toHaveBeenCalledTimes(1);
+    const updateFunction = setCardsMock.mock.calls[0][0];
+    const prevState: [] = [];
+    const newState = updateFunction(prevState);
+    expect(newState[0]).toMatchObject({
+      column: 'todo',
+      title: 'New task',
+    });
+
+    expect(textarea.textContent).toBe('');
+    expect(setAdding).toHaveBeenCalled();
   });
 
   it('prevents adding an empty card', () => {
     const setCardsMock = vi.fn();
+    const preventDefault = vi.fn();
+    const setAdding = vi.fn();
+
+    vi.spyOn(React, 'useState').mockImplementation(() => [true, setAdding]);
+
     render(<AddCard column="todo" setCards={setCardsMock} />);
     fireEvent.click(screen.getByText(/Add card/i));
 
-    fireEvent.submit(
-      screen.getByPlaceholderText(/Add new task/i).closest('form')!
-    );
+    const form = screen.getByPlaceholderText(/Add new task/i).closest('form')!;
+    const submitEvent = new Event('submit', { bubbles: true });
+    Object.defineProperty(submitEvent, 'preventDefault', {
+      value: preventDefault,
+    });
+
+    fireEvent(form, submitEvent);
+
+    expect(preventDefault).toHaveBeenCalled();
 
     expect(setCardsMock).not.toHaveBeenCalled();
+
+    expect(setAdding).not.toHaveBeenCalled();
   });
 
   it('closes the form when "Close" is clicked', () => {

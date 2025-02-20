@@ -44,7 +44,6 @@ describe('BurnBarrel Component', () => {
   });
 
   it('should allow cards to be removed by BurnBarrel', () => {
-    // Arrange
     let activeState = false;
     let setActiveCallback: (value: boolean) => void;
 

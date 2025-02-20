@@ -25,8 +25,13 @@ export const AddCard = ({ column, setCards }: AddCardProps) => {
 
     setCards(pv => [...pv, newCard]);
 
-    setAdding(false);
+    setText('');
+    setAdding(prev => {
+      console.log('🚀 ~ setAdding ~ prev:', prev);
+      return !prev;
+    });
   };
+  console.log('🚀 ~ handleSubmit ~ setAdding:', adding);
 
   return (
     <>
