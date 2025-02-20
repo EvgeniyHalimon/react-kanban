@@ -31,9 +31,6 @@ describe('AddCard Component', () => {
   it('calls setCards with new card when submitting', () => {
     const setCardsMock = vi.fn();
     const preventDefault = vi.fn();
-    const setAdding = vi.fn();
-
-    vi.spyOn(React, 'useState').mockImplementation(() => [true, setAdding]);
 
     render(<AddCard column="todo" setCards={setCardsMock} />);
     fireEvent.click(screen.getByText(/Add card/i));
@@ -61,7 +58,7 @@ describe('AddCard Component', () => {
     });
 
     expect(textarea.textContent).toBe('');
-    expect(setAdding).toHaveBeenCalled();
+    expect(textarea).not.toBeInTheDocument();
   });
 
   it('prevents adding an empty card', () => {
